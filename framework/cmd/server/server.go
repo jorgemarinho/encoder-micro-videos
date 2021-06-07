@@ -4,11 +4,13 @@ import (
 	"encoder/application/services"
 	"encoder/framework/database"
 	"encoder/framework/queue"
-	"github.com/joho/godotenv"
-	"github.com/streadway/amqp"
+	"fmt"
 	"log"
 	"os"
 	"strconv"
+
+	"github.com/joho/godotenv"
+	"github.com/streadway/amqp"
 )
 
 var db database.Database
@@ -35,8 +37,8 @@ func init() {
 
 	db.AutomMigrateDb = automMigrateDb
 	db.Debug = debug
-	db.DsnTest = os.Getenv("DSN_TEST")
-	db.Dsn = os.Getenv("DSN")
+	db.DsnTest = os.Getenv("DNS_TEST")
+	db.Dsn = os.Getenv("DNS")
 	db.DbTypeTest = os.Getenv("DB_TYPE_TEST")
 	db.DbType = os.Getenv("DB_TYPE")
 	db.Env = os.Getenv("ENV")
@@ -50,6 +52,8 @@ func main() {
 	dbConnection, err := db.Connect()
 
 	if err != nil {
+
+		fmt.Println("error: ", err)
 		log.Fatalf("Error connecting to DB")
 	}
 
